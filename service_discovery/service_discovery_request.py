@@ -20,7 +20,8 @@ class ServiceDiscoveryRequest():
             response = json.loads(response.decode())
             address = response["response"]["address"]
             port_no = response["response"]["port-no"]
-            retVal = (address, port_no)
+            path = response["response"]["path"]
+            retVal = (address, port_no, path)
         finally:
             service_discovery_socket.close()
 

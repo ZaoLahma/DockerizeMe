@@ -22,6 +22,7 @@ class ServicesAPI(Resource):
         parser.add_argument("version", required=True)
         parser.add_argument("address", required=True)
         parser.add_argument("port", required=True)
+        parser.add_argument("path", required=True)
 
         args = parser.parse_args()
 

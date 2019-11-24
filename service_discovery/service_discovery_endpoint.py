@@ -2,6 +2,10 @@ import socket
 import struct
 import json
 from .service_discovery_context import ServiceDiscoveryCtxt
+<<<<<<< HEAD
+=======
+from nw_misc.nw_misc import NwMisc
+>>>>>>> File storage started
 
 class ServiceDiscoveryEndpoint:
     def __init__(self, service_repository_port_no):
@@ -40,12 +44,13 @@ class ServiceDiscoveryEndpoint:
                 request = json.loads(data[0].decode())
                 client_request = request["request"]
                 if "service-repository-address" == client_request:
-                    print("ServiceDiscoveryListener - Returning {} on port_no: {}".format(self.get_own_address(), self.service_repository_port_no))
+                    print("ServiceDiscoveryListener - Returning {} on port_no: {}".format(NwMisc.get_own_address(), self.service_repository_port_no))
 
                     response = {}
                     response["response"] = {}
                     response["response"]["port-no"] = self.service_repository_port_no
-                    response["response"]["address"] = self.get_own_address()
+                    response["response"]["address"] = NwMisc.get_own_address()
+                    response["response"]["path"] = "services"
 
                     response = json.dumps(response)
 
@@ -60,6 +65,7 @@ class ServiceDiscoveryEndpoint:
                     print("Ignoring request for {}".format(client_request))
         self.multicast_socket.close()
         print("Stopped service discovery endpoint at {}".format(ServiceDiscoveryCtxt.multicast_address))
+<<<<<<< HEAD
 
     def get_own_address(self):
         if None == self.address:
@@ -68,3 +74,5 @@ class ServiceDiscoveryEndpoint:
             self.address = s.getsockname()[0]
             s.close()
         return self.address
+=======
+>>>>>>> File storage started
