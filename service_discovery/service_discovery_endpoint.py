@@ -1,17 +1,17 @@
 import socket
 import struct
 import json
+from .service_discovery_context import ServiceDiscoveryCtxt
 
 class ServiceDiscoveryEndpoint:
-    def __init__(self, multicast_address, service_repository_port_no):
-        self.multicast_address = multicast_address
+    def __init__(self, service_repository_port_no):
         self.service_repository_port_no = service_repository_port_no
 
-        multicast_server_address = ("", multicast_address[1])
+        multicast_server_address = ("", ServiceDiscoveryCtxt.multicast_address[1])
 
         print("multicast_server_address {}".format(multicast_server_address))
 
-        group = socket.inet_aton(multicast_address[0])
+        group = socket.inet_aton(ServiceDiscoveryCtxt.multicast_address[0])
         mreq = struct.pack('4sL', group, socket.INADDR_ANY)
 
         self.multicast_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -26,7 +26,8 @@ class ServiceDiscoveryEndpoint:
         print("__init__ done")
 
     def run(self):
-        print("Starting service discovery endpoint at {}".format(self.multicast_address))
+        print("Starting service discovery endpoint at {}".format(ServiceDiscoveryCtxt.multicast_address))
+        self.active = True
         while True == self.active:
             try:
                 data = self.multicast_socket.recvfrom(4096)
@@ -58,7 +59,7 @@ class ServiceDiscoveryEndpoint:
                 else:
                     print("Ignoring request for {}".format(client_request))
         self.multicast_socket.close()
-        print("Stopped service discovery endpoint at {}".format(self.multicast_address))
+        print("Stopped service discovery endpoint at {}".format(ServiceDiscoveryCtxt.multicast_address))
 
     def get_own_address(self):
         if None == self.address:

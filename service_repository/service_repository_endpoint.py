@@ -10,8 +10,8 @@ class ServiceRepositoryEndpoint:
         self.flask_inst = flask_inst
         self.flask_rest_inst = flask_rest_inst
 
-    def host(self, host, port, debug):
-        self.flask_inst.run(host, port, debug)
+    def host(self, host, port, debug, reload):
+        self.flask_inst.run(host, port, debug, reload)
 
     @staticmethod
     @flask_inst.route("/")

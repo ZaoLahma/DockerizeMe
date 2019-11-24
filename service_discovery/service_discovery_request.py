@@ -13,7 +13,8 @@ class ServiceDiscoveryRequest():
         retVal = None
 
         try:
-            service_discovery_socket.sendto(request.encode(), multicast_address)
+            sent = service_discovery_socket.sendto(request.encode(), multicast_address)
+            print("Sent {}".format(sent))
             response = service_discovery_socket.recv(4096)
             print("Response: {}".format(response.decode()))
             response = json.loads(response.decode())
