@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Resource, Api
+from service_discovery.service_discovery_request import ServiceDiscoveryRequest
 
 flask_inst = Flask(__name__)
 flask_rest_inst = Api(flask_inst)

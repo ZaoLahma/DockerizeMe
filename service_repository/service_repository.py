@@ -1,10 +1,9 @@
 import json
 
-services_inst = {}
-
 class ServiceRepository:
+    services_inst = {}
     def __init__(self):
-        self.services = services_inst
+        self.services = ServiceRepository.services_inst
 
     def get_all_services(self):
         print(self.services)
