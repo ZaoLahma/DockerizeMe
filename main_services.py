@@ -1,12 +1,11 @@
-from service_repository.service_repository_endpoint import ServiceRepositoryEndpoint
-from service_repository.service_api import ServicesAPI
-from service_discovery.service_discovery_endpoint import ServiceDiscoveryEndpoint
-from service_discovery.service_discovery_context import ServiceDiscoveryCtxt
-from file_storage.file_storage_api import FileStorageAPI
+from services.service_repository.service_repository_endpoint import ServiceRepositoryEndpoint
+from services.service_repository.service_api import ServicesAPI
+from services.service_discovery.service_discovery_endpoint import ServiceDiscoveryEndpoint
+from services.service_discovery.service_discovery_context import ServiceDiscoveryCtxt
 import threading
 
 if __name__ == "__main__":
-    print("Main called")
+    print("Services main called")
     service_discovery_port = 8082
     services_port = 8080
     multicast_address = ("224.3.29.71", service_discovery_port)
@@ -18,9 +17,7 @@ if __name__ == "__main__":
 
     service_repository_endpoint = ServiceRepositoryEndpoint()
     service_repository_endpoint.add_resource(ServicesAPI, '/services')
-    service_repository_endpoint.add_resource(FileStorageAPI, '/filestorage/<string:file_name>')
     service_repository_endpoint.host('0.0.0.0', services_port, True, False)
-
 
     service_discovery_thread.active = False
     
