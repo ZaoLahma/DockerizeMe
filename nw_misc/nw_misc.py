@@ -10,3 +10,4 @@ class NwMisc:
             NwMisc.ADDRESS = s.getsockname()[0]
             s.close()
         return NwMisc.ADDRESS
+
