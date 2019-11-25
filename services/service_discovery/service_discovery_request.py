@@ -5,16 +5,16 @@ import struct
 class ServiceDiscoveryRequest():
     @staticmethod
     def getServiceRepository(multicast_address):
-        service_discovery_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        ttl = struct.pack('b', 1)
-        service_discovery_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
-        service_discovery_socket.settimeout(1)
         request = '{"request" : "service-repository-address"}'
 
         retVal = None
         attempts = 0
         max_attempts = 5
         while attempts < max_attempts:
+            service_discovery_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            ttl = struct.pack('b', 1)
+            service_discovery_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+            service_discovery_socket.settimeout(1)
             try:
                 sent = service_discovery_socket.sendto(request.encode(), multicast_address)
                 print("Sent {}".format(sent))

@@ -29,3 +29,16 @@ class ServicesAPI(Resource):
         self.service_repository.add_service(args["identifier"], args)
 
         return {'result' : 'success'}, 201
+
+class ServiceAPI(Resource):
+    def __init__(self):
+        self.service_repository = ServiceRepository()
+
+    def get(self, identifier):
+        service = None
+        try:
+            service = self.service_repository.get_service(identifier)
+        except KeyError:
+            return {'result' : 'fail'}, 404
+
+        return {'result' : 'success', 'data' : service}, 200

@@ -3,6 +3,11 @@ from services.service_discovery.service_discovery_context import ServiceDiscover
 from .file_storage_context import FileStorageCtxt
 from nw_misc.nw_misc import NwMisc
 from flask_restful import Resource
+from flask import request
+from flask import send_file
+from io import BytesIO
+from magic import Magic
+from flask import Response
 
 class FileStorageAPI(Resource):
     @staticmethod
@@ -11,9 +16,19 @@ class FileStorageAPI(Resource):
         ServicesClientAPI.register_service("file-storage", "File storage", 1, NwMisc.get_own_address(), 8081, "filestorage")
         print("File storage ready to store files to {}".format(FileStorageCtxt.storage_path))
 
-    def get(self):
-        return '{result : success}', 200
+    def get(self, file_name):
 
+        if ("list.htm" == file_name):
+            html = "<html><head></head><body>Hello!</body></html>"
+            return Response(html, mimetype="text/html", headers={'Content-Type': 'text/html'})
+        else:
+            with open(FileStorageCtxt.storage_path + file_name, 'rb') as bites:
+                mime = Magic(mime=True)
+                return send_file(BytesIO(bites.read()), attachment_filename=file_name, mimetype=mime.from_file(FileStorageCtxt.storage_path + file_name))
+    
     def put(self, file_name):
-        print("put called with file_name: {}".format(file_name))
-        return '{result : success}', 200
+
+        with open(FileStorageCtxt.storage_path + file_name, "wb+") as new_file:
+            new_file.write(request.get_data())
+
+        return {'result' : 'success', 'file-name' : file_name}, 201

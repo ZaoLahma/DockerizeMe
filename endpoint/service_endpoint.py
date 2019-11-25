@@ -11,6 +11,7 @@ class ServiceEndpoint:
         self.flask_rest_inst = flask_rest_inst
 
     def host(self, host, port, debug, reload):
+        print("ServiceEndpoint - hosting on <{}>".format((host, port)))
         self.flask_inst.run(host, port, debug, reload)
 
     @staticmethod
