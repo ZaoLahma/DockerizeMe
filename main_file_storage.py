@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     FileStorageAPI.publish()
 
-    service_endpoint = ServiceEndpoint()
-    service_endpoint.add_resource(FileStorageAPI, '/filestorage/<string:file_name>')
+    service_endpoint = ServiceEndpoint("FileStorage", "../file_storage")
+    service_endpoint.add_resource(FileStorageAPI, '/filestorage/<string:resource>')
     service_endpoint.host(NwMisc.get_own_address(), file_storage_port, True, True)
     

@@ -6,13 +6,13 @@ flask_inst = Flask(__name__)
 flask_rest_inst = Api(flask_inst)
 
 class ServiceEndpoint:
-    def __init__(self):
+    def __init__(self, name, app_rel_path):
         self.flask_inst = flask_inst
         self.flask_rest_inst = flask_rest_inst
 
     def host(self, host, port, debug, reload):
         print("ServiceEndpoint - hosting on <{}>".format((host, port)))
-        self.flask_inst.run(host, port, debug, reload)
+        self.flask_inst.run(host, port, debug=debug, use_reloader=reload)
 
     @staticmethod
     @flask_inst.route("/")

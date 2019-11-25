@@ -7,7 +7,8 @@ from flask import request
 from flask import send_file
 from io import BytesIO
 from magic import Magic
-from flask import Response
+from flask import render_template
+from flask import make_response
 
 class FileStorageAPI(Resource):
     @staticmethod
@@ -16,15 +17,15 @@ class FileStorageAPI(Resource):
         ServicesClientAPI.register_service("file-storage", "File storage", 1, NwMisc.get_own_address(), 8081, "filestorage")
         print("File storage ready to store files to {}".format(FileStorageCtxt.storage_path))
 
-    def get(self, file_name):
+    def get(self, resource):
 
-        if ("list.htm" == file_name):
-            html = "<html><head></head><body>Hello!</body></html>"
-            return Response(html, mimetype="text/html", headers={'Content-Type': 'text/html'})
+        if ("list.html" == resource):
+            headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('base.html'), 200, headers)
         else:
-            with open(FileStorageCtxt.storage_path + file_name, 'rb') as bites:
+            with open(FileStorageCtxt.storage_path + resource, 'rb') as bites:
                 mime = Magic(mime=True)
-                return send_file(BytesIO(bites.read()), attachment_filename=file_name, mimetype=mime.from_file(FileStorageCtxt.storage_path + file_name))
+                return send_file(BytesIO(bites.read()), attachment_filename=resource, mimetype=mime.from_file(FileStorageCtxt.storage_path + file_name))
     
     def put(self, file_name):
 

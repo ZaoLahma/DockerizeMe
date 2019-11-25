@@ -17,7 +17,7 @@ if __name__ == "__main__":
     service_discovery_thread = threading.Thread(target=service_discovery.run)
     service_discovery_thread.start()
 
-    service_endpoint = ServiceEndpoint()
+    service_endpoint = ServiceEndpoint("Services", "../services")
     service_endpoint.add_resource(ServicesAPI, '/services')
     service_endpoint.add_resource(ServiceAPI, '/service/<string:identifier>')
     service_endpoint.host(NwMisc.get_own_address(), services_port, True, True)
