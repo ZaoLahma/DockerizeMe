@@ -19,7 +19,7 @@ class ServiceDiscoveryEndpoint:
         self.multicast_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
         self.multicast_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.multicast_socket.bind(multicast_server_address)
-        self.multicast_socket.settimeout(0.001)
+        self.multicast_socket.settimeout(1)
 
         self.address = None
         self.active = False
