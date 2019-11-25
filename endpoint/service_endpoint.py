@@ -5,7 +5,7 @@ from services.service_discovery.service_discovery_request import ServiceDiscover
 flask_inst = Flask(__name__)
 flask_rest_inst = Api(flask_inst)
 
-class ServiceRepositoryEndpoint:
+class ServiceEndpoint:
     def __init__(self):
         self.flask_inst = flask_inst
         self.flask_rest_inst = flask_rest_inst

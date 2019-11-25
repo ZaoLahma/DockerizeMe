@@ -1,7 +1,7 @@
 import requests
-from service_discovery.service_discovery_request import ServiceDiscoveryRequest
+from services.service_discovery.service_discovery_request import ServiceDiscoveryRequest
 
-from service_discovery.service_discovery_context import ServiceDiscoveryCtxt
+from services.service_discovery.service_discovery_context import ServiceDiscoveryCtxt
 
 class ServicesClientAPI:
     @staticmethod
