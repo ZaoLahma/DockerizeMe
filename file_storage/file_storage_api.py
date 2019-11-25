@@ -25,7 +25,7 @@ class FileStorageAPI(Resource):
         else:
             with open(FileStorageCtxt.storage_path + resource, 'rb') as bites:
                 mime = Magic(mime=True)
-                return send_file(BytesIO(bites.read()), attachment_filename=resource, mimetype=mime.from_file(FileStorageCtxt.storage_path + file_name))
+                return send_file(BytesIO(bites.read()), attachment_filename=resource, mimetype=mime.from_file(FileStorageCtxt.storage_path + resource))
     
     def put(self, file_name):
 
