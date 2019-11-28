@@ -10,7 +10,6 @@ class ServicesAPI(Resource):
         print("Get")
         services = []
         for key in self.service_repository.get_all_services():
-            print(key)
             services.append(self.service_repository.get_all_services()[key])
         return {'result' : 'success', 'data' : services}, 200
 
