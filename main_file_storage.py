@@ -12,7 +12,7 @@ if __name__ == "__main__":
     ServiceDiscoveryCtxt.multicast_address = multicast_address
     FileStorageCtxt.storage_path = '/app/file_storage/files'
 
-    FileStorageAPI.publish()
+    FileStorageAPI.init()
 
     service_endpoint = ServiceEndpoint("FileStorage", "../file_storage")
     service_endpoint.add_resource(FileStorageAPI, '/filestorage/<string:resource>')

@@ -8,6 +8,7 @@ flask_rest_inst = Api(flask_inst)
 class ServiceEndpoint:
     def __init__(self, name, app_rel_path):
         self.flask_inst = flask_inst
+        self.flask_inst.template_folder = app_rel_path + "/templates"
         self.flask_rest_inst = flask_rest_inst
 
     def host(self, host, port, debug, reload):
@@ -17,7 +18,7 @@ class ServiceEndpoint:
     @staticmethod
     @flask_inst.route("/")
     def hello():
-        return "Hello world from flask!"
+        return "<html><head><title>Install ok</title></head><body>If you see this, the home server is up and running</body></html>"
     
     def add_resource(self, api, path):
         self.flask_rest_inst.add_resource(api, path)

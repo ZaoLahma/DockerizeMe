@@ -9,10 +9,13 @@ from io import BytesIO
 from magic import Magic
 from flask import render_template
 from flask import make_response
+from os import listdir
+from os import remove
+from pathlib import Path
 
 class FileStorageAPI(Resource):
     @staticmethod
-    def publish():
+    def init():
         print("File storage publishing its service...")
         ServicesClientAPI.register_service("file-storage", "File storage", 1, NwMisc.get_own_address(), 8081, "filestorage")
         print("File storage ready to store files to {}".format(FileStorageCtxt.storage_path))
@@ -21,15 +24,26 @@ class FileStorageAPI(Resource):
 
         if ("list.html" == resource):
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('base.html'), 200, headers)
-        else:
-            with open(FileStorageCtxt.storage_path + resource, 'rb') as bites:
-                mime = Magic(mime=True)
-                return send_file(BytesIO(bites.read()), attachment_filename=resource, mimetype=mime.from_file(FileStorageCtxt.storage_path + resource))
-    
-    def put(self, file_name):
+            files = listdir(Path(FileStorageCtxt.storage_path))
 
-        with open(FileStorageCtxt.storage_path + file_name, "wb+") as new_file:
+            return make_response(render_template('files/list.html', title="List", files=files), 200, headers)
+        else:
+            with open(Path(FileStorageCtxt.storage_path + "/" + resource), 'rb') as bites:
+                mime = Magic(mime=True)
+                mime_type = mime.from_file(FileStorageCtxt.storage_path + "/" + resource)
+                return send_file(BytesIO(bites.read()), attachment_filename=resource, mimetype=mime_type)
+    
+    def put(self, resource):
+
+        with open(Path(FileStorageCtxt.storage_path + "/" + resource), "wb+") as new_file:
             new_file.write(request.get_data())
 
-        return {'result' : 'success', 'file-name' : file_name}, 201
+        return {'result' : 'success', 'file-name' : resource}, 201
+
+    def delete(self, resource):
+        try:
+            remove(Path(FileStorageCtxt.storage_path + "/" + resource))
+        except Exception:
+            pass
+
+        return {'result' : 'success', 'file-name' : resource}, 201
