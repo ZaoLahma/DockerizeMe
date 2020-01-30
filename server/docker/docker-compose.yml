@@ -12,6 +12,7 @@ services:
     network_mode: "host"
 
   filestorage:
+    user: "1000"
     depends_on:
       - "services"
     build:
@@ -19,6 +20,15 @@ services:
       dockerfile: ./file_storage/docker/Dockerfile
     volumes:
       - ../:/app
+      - storage-path:/app/file_storage/files
     ports:
       - 8081:8081
     network_mode: "host"
+
+volumes:
+  storage-path:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/janne/files
