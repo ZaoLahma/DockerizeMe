@@ -9,8 +9,11 @@ services:
       - ../:/app
     ports:
       - 8080:8080
+    network_mode: "host"
 
   filestorage:
+    depends_on:
+      - "services"
     build:
       context: ../
       dockerfile: ./file_storage/docker/Dockerfile
@@ -18,3 +21,4 @@ services:
       - ../:/app
     ports:
       - 8081:8081
+    network_mode: "host"

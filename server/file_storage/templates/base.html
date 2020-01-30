@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
     <h1>Filestorage</h1>
+    <!--
     <ul>
       {% if g.user %}
         <li><span>{{ g.user['username'] }}</span>
@@ -12,6 +13,7 @@
         <li><a href="{{ url_for('auth.login') }}">Log In</a>
       {% endif %}
     </ul>
+  -->
   </nav>
 <body>
 {% block content %}{% endblock %}
