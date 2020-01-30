@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Homie</string>
+    <string name="result_hint">Result</string>
+    <string name="button_send">Send</string>
+</resources>
