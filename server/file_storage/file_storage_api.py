@@ -11,7 +11,9 @@ from flask import render_template
 from flask import make_response
 from os import listdir
 from os import remove
+import os
 from pathlib import Path
+from flask_restful.reqparse import RequestParser
 
 class FileStorageAPI(Resource):
     @staticmethod
@@ -39,6 +41,14 @@ class FileStorageAPI(Resource):
             new_file.write(request.get_data())
 
         return {'result' : 'success', 'file-name' : resource}, 201
+
+    def post(self):
+        file_data = request.files['file']
+
+        with open(Path(FileStorageCtxt.storage_path + "/" + file_data.filename), "wb+") as new_file:
+            new_file.write(file_data.read())
+        
+        return {'result' : 'success'}, 201
 
     def delete(self, resource):
         try:

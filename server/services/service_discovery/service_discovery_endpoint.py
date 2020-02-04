@@ -8,9 +8,7 @@ class ServiceDiscoveryEndpoint:
     def __init__(self, service_repository_port_no):
         self.service_repository_port_no = service_repository_port_no
 
-        multicast_server_address = ("", ServiceDiscoveryCtxt.multicast_address[1])
-
-        print("multicast_server_address {}".format(multicast_server_address))
+        print("multicast_server_address {}".format(ServiceDiscoveryCtxt.multicast_address))
 
         group = socket.inet_aton(ServiceDiscoveryCtxt.multicast_address[0])
         mreq = struct.pack('4sL', group, socket.INADDR_ANY)
@@ -18,7 +16,7 @@ class ServiceDiscoveryEndpoint:
         self.multicast_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.multicast_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
         self.multicast_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.multicast_socket.bind(multicast_server_address)
+        self.multicast_socket.bind(ServiceDiscoveryCtxt.multicast_address)
         self.multicast_socket.settimeout(1)
 
         self.address = None

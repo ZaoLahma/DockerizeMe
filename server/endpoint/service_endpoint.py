@@ -18,7 +18,7 @@ class ServiceEndpoint:
     @staticmethod
     @flask_inst.route("/")
     def hello():
-        return "<html><head><title>Install ok</title></head><body>If you see this, the home server is up and running</body></html>"
+        return "<html><head><title>Install ok</title></head><body>If you see this, the application is up and running</body></html>"
     
-    def add_resource(self, api, path):
-        self.flask_rest_inst.add_resource(api, path)
+    def add_resource(self, api, *paths):
+        self.flask_rest_inst.add_resource(api, *paths)
